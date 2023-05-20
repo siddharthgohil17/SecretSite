@@ -11,7 +11,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const  FacebookStrategy=require("passport-facebook").Strategy;
 const GitHubStrategy=require("passport-github2").Strategy;
 
-
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -73,7 +72,7 @@ passport.serializeUser(function (user, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret:process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
+    callbackURL: "https://hide-secret.onrender.com/auth/google/secrets",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo" //this use for to stop deprecat
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -88,7 +87,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
     clientID: process.env.APP_ID,
     clientSecret: process.env.APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/secrets"
+    callbackURL:"https://hide-secret.onrender.com/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
     const facebookId = "facebook_" + profile.id;
@@ -102,7 +101,7 @@ passport.use(new FacebookStrategy({
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/github/secrets"
+  callbackURL: "https://hide-secret.onrender.com/auth/github/secrets"
 },
 function(accessToken, refreshToken, profile, done) {
   const githubId = "github_" + profile.id; 
@@ -215,32 +214,6 @@ app.post('/submit',function(req,res){
 })
 app.post('/register', function (req, res) {
 
-    // bcrypt.hash( req.body.password, saltRounds, function(err, hash) {
-    //     newUser = new User({
-    //         email: req.body.username,
-    //         password:hash
-    //     });
-    //       const username=req.body.username;
-    //     User.findOne({ email: username })
-    //         .then(function (founduser) {
-    //             if (founduser) {
-
-    //                 res.send("You are already registered")
-    //             }
-    //             else {
-    //                 newUser.save().then(() => {
-    //                      console.log("i'm in")
-    //                     res.render("secrets")
-    //                 })
-    //                 .catch(err => {
-    //                     res.status(400).send("Oops!!!!!!");
-    //                 })
-
-    //             }
-    //         })
-
-    // });
-
     User.register({username:req.body.username},req.body.password,function(err,user){
          if(err)
          {
@@ -274,33 +247,6 @@ app.post('/login', function (req, res) {
             })
          }
     })
-
-    // User.findOne({email: username })
-    //     .then(function (founduser) {
-    //         if (founduser) {
-
-
-    //             bcrypt.compare(password,founduser.password, function(err, result) {
-    //                     if(result===true)
-    //                     {
-    //                         res.render("secrets");
-    //                     }
-    //                     else {
-    //                             res.status(400).send("Invalid username or password");
-    //                         }
-
-    //             });
-    //         } else {
-    //             res.status(400).send("Invalid username or password");
-    //         }
-    //     })
-    //     .catch(err => {
-    //         res.status(400).send("An error occurred while processing your request");
-    //     });
-
-    
-
-
 
 });
 
