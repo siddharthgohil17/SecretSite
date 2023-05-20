@@ -1,1 +1,1 @@
-[# SecretSite](https://hide-secret.onrender.com/)
+https://hide-secret.onrender.com
