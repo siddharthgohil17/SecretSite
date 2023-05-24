@@ -1,7 +1,6 @@
 require('dotenv').config();
 const findOrCreate = require("mongoose-findorcreate");
 const express = require("express")
-const favicon = require('serve-favicon');
 const bodyParser = require("body-parser")
 const ejs = require("ejs")
 const mongoose = require("mongoose")
@@ -16,7 +15,6 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.static("public"));
-app.use(express.favicon(__dirname + '/public/img/favicon.ico', { maxAge: 2592000000 }));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -31,11 +29,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+// main().catch(err => console.log(err));
+// async function main() {
+//     await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+// }
 main().catch(err => console.log(err));
 async function main() {
-    await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+  await mongoose.connect('mongodb://127.0.0.1:27017/userDB', { useNewUrlParser: true });
 }
-
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
