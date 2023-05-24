@@ -1,6 +1,7 @@
 require('dotenv').config();
 const findOrCreate = require("mongoose-findorcreate");
 const express = require("express")
+
 const bodyParser = require("body-parser")
 const ejs = require("ejs")
 const mongoose = require("mongoose")
@@ -29,14 +30,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// main().catch(err => console.log(err));
-// async function main() {
-//     await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
-// }
 main().catch(err => console.log(err));
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/userDB', { useNewUrlParser: true });
+    await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
 }
+
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
